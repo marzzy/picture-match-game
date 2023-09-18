@@ -12,7 +12,7 @@ export function GameBoardHeader(props) {
           Reset game
         </button>
         <label>
-          Pick the Photo theme: {' '}
+          Photo Theme: {' '}
           <select
             className="text-amber-400"
             value={selectedPhotosTheme}

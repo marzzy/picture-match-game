@@ -12,3 +12,8 @@ export function getPlayingCardsIds(cards) {
     .filter(card => card.cardState === "playing")
     .map(card => card.id);
 }
+
+export function getIsTheGameFinished(cards) {
+  const unmatchedCards = cards.filter(card => card.cardState === 'unmatched');
+  return unmatchedCards.length === 0;
+}

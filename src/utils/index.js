@@ -1,2 +1,2 @@
-export * from './fetchImages'
+export * from './useFetchImages'
 export * from './math'

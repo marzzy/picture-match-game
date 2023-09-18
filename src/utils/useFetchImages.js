@@ -8,6 +8,7 @@ const api = createApi({
 
 function fetchData(setIsLoading, setPhotosResponse, setErrorMessage, searchTerm, count) {
   setIsLoading(true);
+  // TODO: add caching strategies for repatitive inputs
   api.search
     .getPhotos({ query:searchTerm, orientation: "squarish", per_page: count, page: getRandomInt(10)+1 })
     .then(result => {

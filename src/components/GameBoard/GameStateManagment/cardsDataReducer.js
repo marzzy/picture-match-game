@@ -11,7 +11,7 @@ function initNewGameCards(photosDetails){
     gameCardsData.push({
       id: getRandomUniqueNum(),
       imgId: selectedPhotoId,
-      cardState: 'unmatched' // playing , matched, unmatched
+      cardState: 'unmatched', // playing , matched, unmatched
     });
     gameCardsImagesIDsList.splice(indexOfSelectedPhotoId, 1); // remove the id of selected photo from the gameCardsImagesIDsList not to selected more than 1
   }

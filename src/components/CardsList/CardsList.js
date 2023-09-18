@@ -2,11 +2,7 @@ import { Card } from '@/components/Card';
 import Image from 'next/image';
 
 export function CardsList(props) {
-  const { gameCards, photos, isLockedNewAction, dispatchGameCardData } = props;
-
-  function FlipCard(cardId) {
-    dispatchGameCardData({type: 'flipCard', payload: cardId})
-  }
+  const { gameCards, photos, isLockedNewAction, handleFlipCard } = props;
 
   return (
     <ul className='flex flex-wrap justify-center gap-2 mt-8'>
@@ -17,7 +13,7 @@ export function CardsList(props) {
           <li key={card.id}>
             <Card
               state={card.cardState}
-              onClick={() => FlipCard(card.id)}
+              onClick={() => handleFlipCard(card.id)}
               isLocked={isLockedNewAction}
             >
               {selectedImageData[0] &&
