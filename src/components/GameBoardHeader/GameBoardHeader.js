@@ -1,13 +1,12 @@
 
 export function GameBoardHeader(props) {
-  const { selectedPhotosTheme, photos, setSelectedPhotosTheme } = props;
+  const { selectedPhotosTheme, setSelectedPhotosTheme, fetchNewPhotos } = props;
 
   return (
     <div className='flex justify-evenly items-center'>
-        {/* TODO: make it to request new set of images after reset */}
         <button
           className="my-2 bg-amber-400 text-amber-800 p-2 rounded-sm border-y-4 border-transparent hover:bg-transparent hover:text-amber-100 hover:border-amber-500"
-          onClick={() => dispatchGameCardData({type: 'initNewGame', payload: photos})}
+          onClick={fetchNewPhotos}
           type="reset"
         >
           Reset game

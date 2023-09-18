@@ -12,7 +12,8 @@ export function GameBoard() {
   const {
     photos,
     isLoading,
-    errorMessage
+    errorMessage,
+    fetchNewPhotos
   } = useFetchImage(selectedPhotosTheme);
   const [gameCards, dispatchGameCardData] = useReducer(gameCardDataReducer, []);
   const isLockedNewAction = getPlayingCards(gameCards).length === 2;
@@ -40,10 +41,12 @@ export function GameBoard() {
 
   return (
     <div>
+      {/* TODO: use context to prevent these props drilling */}
       <GameBoardHeader
         selectedPhotosTheme={selectedPhotosTheme}
         photos={photos}
         setSelectedPhotosTheme={setSelectedPhotosTheme}
+        fetchNewPhotos={fetchNewPhotos}
       />
       {isLoading && <Loading />}
       {errorMessage && <ErrorDisplay errorMessage={errorMessage}/>}
