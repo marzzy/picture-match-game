@@ -31,15 +31,15 @@ function handleFlipCard(gameCardsState, selectedCardId){
   });
 }
 
-function handlePlayingCards(gameCardsState, selectedCardsIds, isMatched) {
-  return gameCardsState.map(cardState => {
-    if(selectedCardsIds.includes(cardState.id)) {
+function handlePlayingCards(gameCardsState, isMatched) {
+  return gameCardsState.map(card => {
+    if(card.cardState === 'playing') {
       return {
-        ...cardState,
+        ...card,
         cardState: isMatched ? 'matched' : 'unmatched'
       }
     }
-    return cardState;
+    return card;
   })
 }
 
@@ -52,10 +52,10 @@ export function gameCardDataReducer(gameCardsState, gameCardsAction) {
       return handleFlipCard(gameCardsState, gameCardsAction.payload)
     }
     case 'handleSelectMatches': {
-      return handlePlayingCards(gameCardsState, gameCardsAction.payload, true)
+      return handlePlayingCards(gameCardsState, true)
     }
     case 'handleSelectUnmatched': {
-      return handlePlayingCards(gameCardsState, gameCardsAction.payload, false)
+      return handlePlayingCards(gameCardsState, false)
     }
     default: {
       return gameCardsState

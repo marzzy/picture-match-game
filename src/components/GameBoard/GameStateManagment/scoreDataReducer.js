@@ -1,7 +1,8 @@
 export const initialScoreData = {
   comboMoveCounter: 0,
   moveCounter: 0,
-  score: 0
+  score: 0,
+  record: localStorage.getItem('record') || 0,
 };
 
 export function scoreDataReducer(state, action) {
@@ -16,11 +17,14 @@ export function scoreDataReducer(state, action) {
       const newScore = (state.comboMoveCounter > 0)
         ? state.score+10+Math.pow(2, state.comboMoveCounter)
         : state.score+10;
+      const newRecord = state.record < newScore ? newScore : state.record;
+      localStorage.setItem('record', newRecord);
 
       return {
         ...state,
         comboMoveCounter: state.comboMoveCounter+1,
-        score: newScore
+        score: newScore,
+        record: newRecord
       }
     }
     case 'scoreUnMatchedMove': {
@@ -30,7 +34,10 @@ export function scoreDataReducer(state, action) {
       }
     }
     case 'resetScoreData': {
-      return initialScoreData;
+      return {
+        ...initialScoreData,
+        record: state.record
+      };
     }
     default: {
       return state;

@@ -4,10 +4,11 @@ import { ErrorDisplay } from '@/components/ErrorDisplay';
 import { Loading } from '@/components/Loading';
 import { gameCardDataReducer } from './GameStateManagment/cardsDataReducer';
 import { scoreDataReducer, initialScoreData } from './GameStateManagment/scoreDataReducer';
-import { getIsPlayingCardsMatch, getPlayingCardsIds, getPlayingCards, getIsTheGameFinished } from './GameStateManagment/helpers';
+import { getIsPlayingCardsMatch, getPlayingCards, getIsTheGameFinished } from './GameStateManagment/helpers';
 import { CardsList } from '@/components/CardsList';
 import { GameBoardHeader } from '@/components/GameBoardHeader';
 import { ScoreBoard } from '@/components/ScoreBoard';
+import { WinComponent } from '../WinComponent';
 
 export function GameBoard() {
   const [selectedPhotosTheme, setSelectedPhotosTheme] = useState('cat');
@@ -20,7 +21,8 @@ export function GameBoard() {
   const [gameCards, dispatchGameCardData] = useReducer(gameCardDataReducer, []);
   const [scoreData, dispatchScoreData] = useReducer(scoreDataReducer, initialScoreData);
   const isLockedNewAction = getPlayingCards(gameCards).length === 2;
-  const isTheGameFinished = getIsTheGameFinished(gameCards);
+  const isTheGameFinished = getIsTheGameFinished(gameCards) && !isLoading;
+  const newRecord = scoreData.score >= scoreData.record ? scoreData.score : null;
 
   useEffect(() => {
     if(photos.length > 0) {
@@ -33,13 +35,11 @@ export function GameBoard() {
   useEffect(() => {
     if (isLockedNewAction) {
       const isPlayingCardsMatched = getIsPlayingCardsMatch(gameCards);
-      const playingCardsIds = getPlayingCardsIds(gameCards);
       dispatchScoreData({type: isPlayingCardsMatched ? 'scoreMatchedMove' : 'scoreUnMatchedMove'});
       
       setTimeout(() => {
         dispatchGameCardData({
-          type: isPlayingCardsMatched ? 'handleSelectMatches' : 'handleSelectUnmatched',
-          payload: playingCardsIds
+          type: isPlayingCardsMatched ? 'handleSelectMatches' : 'handleSelectUnmatched'
         })
       }, isPlayingCardsMatched ? 0 : 1000);
     }
@@ -51,8 +51,7 @@ export function GameBoard() {
   }
 
   return (
-    <div>
-      {/* TODO: use context to prevent these props drilling */}
+    <div className='relative py-5'>
       <GameBoardHeader
         selectedPhotosTheme={selectedPhotosTheme}
         photos={photos}
@@ -60,8 +59,7 @@ export function GameBoard() {
         fetchNewPhotos={fetchNewPhotos}
       />
       <ScoreBoard {...scoreData} />
-      {/* TODO: style the win display  */}
-      {isTheGameFinished && <div> you win </div>}
+      {isTheGameFinished && (<WinComponent fetchNewPhotos={fetchNewPhotos} newRecord={newRecord} />)}
       {isLoading && <Loading />}
       {errorMessage && <ErrorDisplay errorMessage={errorMessage}/>}
       {!isLoading && !errorMessage && (
