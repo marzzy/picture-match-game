@@ -2,7 +2,7 @@ export const initialScoreData = {
   comboMoveCounter: 0,
   moveCounter: 0,
   score: 0,
-  record: localStorage.getItem('record') || 0,
+  record: 0,
 };
 
 export function scoreDataReducer(state, action) {
@@ -31,6 +31,12 @@ export function scoreDataReducer(state, action) {
       return {
         ...state,
         comboMoveCounter: 0,
+      }
+    }
+    case 'updateRecord': {
+      return {
+        ...state,
+        record: localStorage.getItem('record') || 0,
       }
     }
     case 'resetScoreData': {

@@ -32,6 +32,10 @@ export function GameBoard() {
   },
   [photos]);
 
+  useEffect(()=> {
+    dispatchScoreData({type: 'updateRecord'}); // since in the server we can not get the data from localstorage
+  },[])
+
   useEffect(() => {
     if (isLockedNewAction) {
       const isPlayingCardsMatched = getIsPlayingCardsMatch(gameCards);
