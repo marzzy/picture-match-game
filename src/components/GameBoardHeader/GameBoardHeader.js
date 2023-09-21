@@ -2,7 +2,7 @@ import { ResetButton } from '../ResetButton';
 import { CARDS_SIZE_RANGE_GAP, MIN_CARDS_SIZE, MAX_CARDS_SIZE  } from '@/components/Card/fixture';
 
 export function GameBoardHeader(props) {
-  const { selectedPhotosTheme, setSelectedPhotosTheme, fetchNewPhotos, cardsSize, setCardsSize } = props;
+  const { selectedPhotosTheme, setSelectedPhotosTheme, fetchNewPhotos, cardsSize, setCardsSize, difficultyLevel, setDifficultyLevel } = props;
 
   return (
     <div className='flex justify-evenly items-center'>
@@ -31,6 +31,20 @@ export function GameBoardHeader(props) {
             value={cardsSize}
             step={CARDS_SIZE_RANGE_GAP}
             onChange={(e) => setCardsSize(e.target.value)}
+          />
+        </label>
+        <label>
+          Level: {' '}
+          <input
+            type="range"
+            className="range accent-amber-400"
+            id="level"
+            name="level"
+            min="1"
+            max='50'
+            value={difficultyLevel}
+            // step={CARDS_SIZE_RANGE_GAP}
+            onChange={(e) => setDifficultyLevel(e.target.value)}
           />
         </label>
       </div>

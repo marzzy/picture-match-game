@@ -13,12 +13,13 @@ import { INIT_CARDS_SIZE } from '@/components/Card/fixture';
 
 export function GameBoard() {
   const [selectedPhotosTheme, setSelectedPhotosTheme] = useState('cat');
+  const [difficultyLevel, setDifficultyLevel] = useState(1);
   const {
     photos,
     isLoading,
     errorMessage,
     fetchNewPhotos
-  } = useFetchImage(selectedPhotosTheme);
+  } = useFetchImage(selectedPhotosTheme, difficultyLevel+1);
   const [gameCards, dispatchGameCardData] = useReducer(gameCardDataReducer, []);
   const [scoreData, dispatchScoreData] = useReducer(scoreDataReducer, initialScoreData);
   const [selectedcardSize, setSelectedCardSize] = useState(INIT_CARDS_SIZE);
@@ -65,6 +66,8 @@ export function GameBoard() {
         fetchNewPhotos={fetchNewPhotos}
         cardsSize={selectedcardSize}
         setCardsSize={setSelectedCardSize}
+        difficultyLevel={difficultyLevel}
+        setDifficultyLevel={setDifficultyLevel}
       />
 
       <ScoreBoard {...scoreData} />
