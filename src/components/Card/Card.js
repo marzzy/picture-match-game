@@ -1,7 +1,5 @@
-import './card.css'
-
 export function Card(props) {
-  const {children, onClick, isLocked, state} = props;
+  const {children, onClick, isLocked, state, cardsSize} = props;
   const isCardFlipped = state !== 'unmatched';
   const disableToFlip = isLocked || state === 'matched';
 
@@ -12,12 +10,12 @@ export function Card(props) {
   }
 
   return (
-    <div className={`flip-card flip-card${isCardFlipped ? '-fliped' : ''}`} onClick={flipCard}>
-      <div className="flip-card-inner">
-        <div className="flip-card-front">
+    <div className="perspective" style={{ width: `${cardsSize}px`, height: `${cardsSize}px` }} onClick={flipCard}>
+      <div className={`relative w-full h-full text-center transition-transform	duration-500 shadow-md shadow-white/10 preserve-3d origin-center ${isCardFlipped && 'rotate-y-180'}`} >
+        <div className="bg-stone-800 flex justify-center text-amber-500 items-center text-5xl w-full h-full absolute rounded-md backface-hidden">
           ?
         </div>
-        <div className="flip-card-back flex">
+        <div className="flex w-full h-full absolute rounded-md backface-hidden bg-stone-300 rotate-y-180 overflow-hiden">
           {children}
         </div>
       </div>

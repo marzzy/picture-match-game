@@ -2,7 +2,7 @@ import { Card } from '@/components/Card';
 import Image from 'next/image';
 
 export function CardsList(props) {
-  const { gameCards, photos, isLockedNewAction, handleFlipCard } = props;
+  const { gameCards, photos, isLockedNewAction, handleFlipCard, cardsSize } = props;
 
   return (
     <ul className='flex flex-wrap justify-center gap-2 mt-8'>
@@ -15,6 +15,7 @@ export function CardsList(props) {
               state={card.cardState}
               onClick={() => handleFlipCard(card.id)}
               isLocked={isLockedNewAction}
+              cardsSize={cardsSize}
             >
               {selectedImageData[0] &&
                 <Image
@@ -22,7 +23,7 @@ export function CardsList(props) {
                   width={selectedImageData[0].width}
                   height={selectedImageData[0].height}
                   alt={selectedImageData[0].alt}
-                  className="w-full"
+                  className="w-full rounded-md"
                 />
               }
             </Card>

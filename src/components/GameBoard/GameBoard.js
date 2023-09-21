@@ -9,6 +9,7 @@ import { CardsList } from '@/components/CardsList';
 import { GameBoardHeader } from '@/components/GameBoardHeader';
 import { ScoreBoard } from '@/components/ScoreBoard';
 import { WinComponent } from '../WinComponent';
+import { INIT_CARDS_SIZE } from '@/components/Card/fixture';
 
 export function GameBoard() {
   const [selectedPhotosTheme, setSelectedPhotosTheme] = useState('cat');
@@ -20,6 +21,7 @@ export function GameBoard() {
   } = useFetchImage(selectedPhotosTheme);
   const [gameCards, dispatchGameCardData] = useReducer(gameCardDataReducer, []);
   const [scoreData, dispatchScoreData] = useReducer(scoreDataReducer, initialScoreData);
+  const [selectedcardSize, setSelectedCardSize] = useState(INIT_CARDS_SIZE);
   const isLockedNewAction = getPlayingCards(gameCards).length === 2;
   const isTheGameFinished = getIsTheGameFinished(gameCards) && !isLoading;
   const newRecord = scoreData.score >= scoreData.record ? scoreData.score : null;
@@ -61,7 +63,10 @@ export function GameBoard() {
         photos={photos}
         setSelectedPhotosTheme={setSelectedPhotosTheme}
         fetchNewPhotos={fetchNewPhotos}
+        cardsSize={selectedcardSize}
+        setCardsSize={setSelectedCardSize}
       />
+
       <ScoreBoard {...scoreData} />
       {isTheGameFinished && (<WinComponent fetchNewPhotos={fetchNewPhotos} newRecord={newRecord} />)}
       {isLoading && <Loading />}
@@ -72,6 +77,7 @@ export function GameBoard() {
           photos={photos}
           isLockedNewAction={isLockedNewAction}
           handleFlipCard={handleFlipCard}
+          cardsSize={selectedcardSize}
         />
       )}
     </div>

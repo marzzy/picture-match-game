@@ -4,9 +4,9 @@ import { GameBoard } from '@/components/GameBoard'
 
 export default function Home() {
   return (
-    <main className="grid grid-cols-12 gap-4">
+    <main className="grid grid-cols-12 gap-4 font-orbitron">
       <header className="relative col-span-12 text-6xl">
-        <aside className='absolute bg-amber-300 min-h-[45px] w-full' />
+        <aside className='absolute bg-amber-300 min-h-[80%] w-full' />
         <h1 className='bg-transparent relative'>
           Picture Match
         </h1>

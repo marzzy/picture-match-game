@@ -1,7 +1,7 @@
 import './globals.css'
-import { Inter } from 'next/font/google'
+import { Orbitron } from 'next/font/google'
 
-const inter = Inter({ subsets: ['latin'] })
+const orbitron = Orbitron({ subsets: ['latin'] , display: 'swap' })
 
 export const metadata = {
   title: 'Picture Match Game',
@@ -11,7 +11,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={`${orbitron.className} bg-stone-950 text-amber-600`}>{children}</body>
     </html>
   )
 }

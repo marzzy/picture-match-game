@@ -5,7 +5,7 @@ export function ResetButton({fetchNewPhotos}) {
       onClick={fetchNewPhotos}
       type="reset"
     >
-      Reset game
+      Restart game
     </button>
   )
 }
