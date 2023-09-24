@@ -32,16 +32,19 @@ function fetchData(setIsLoading, setPhotosResponse, setErrorMessage, searchTerm,
     });
 }
 
-export function useFetchImage(searchTerm ,count=4) {
+export function useFetchImage(searchTerm ,count=4, beforeFetch) {
   const [data, setPhotosResponse] = useState([]);
   const [errorMessage, setErrorMessage] = useState("");
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
+    beforeFetch();
     fetchData(setIsLoading, setPhotosResponse, setErrorMessage, searchTerm, count);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchTerm, count]);
 
   function fetchNewPhotos() {
+    beforeFetch();
     fetchData(setIsLoading, setPhotosResponse, setErrorMessage, searchTerm, count);
   }
 

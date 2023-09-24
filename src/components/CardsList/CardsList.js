@@ -1,31 +1,30 @@
 import { Card } from '@/components/Card';
-import Image from 'next/image';
+import { useContext } from 'react';
+import { GameContext } from '../GameBoard/GameStateManagment';
 
 export function CardsList(props) {
-  const { gameCards, photos, isLockedNewAction, handleFlipCard, cardsSize } = props;
+  const { startTheGame, handleFlipCard } = props;
+  const { gameDetails: { gameCards } } = useContext(GameContext);
+  let loadedimgsCounter = 0;
+
+  function increaceLoadedimgsCounter() {
+    if (loadedimgsCounter+1 === gameCards.length) {
+      startTheGame();
+    } else {
+      loadedimgsCounter++;
+    }
+  }
 
   return (
     <ul className='flex flex-wrap justify-center gap-2 mt-8'>
       {gameCards.map(card => {
-        const selectedImageData = photos.filter(photo => photo.id === card.imgId);
-
         return (
-          <li key={card.id}>
+          <li key={card.cardId}>
             <Card
-              state={card.cardState}
-              onClick={() => handleFlipCard(card.id)}
-              isLocked={isLockedNewAction}
-              cardsSize={cardsSize}
+              card={card}
+              onClick={() => handleFlipCard(card.cardId)}
+              increaceLoadedimgsCounter={increaceLoadedimgsCounter}
             >
-              {selectedImageData[0] &&
-                <Image
-                  src={selectedImageData[0].url}
-                  width={selectedImageData[0].width}
-                  height={selectedImageData[0].height}
-                  alt={selectedImageData[0].alt}
-                  className="w-full rounded-md"
-                />
-              }
             </Card>
           </li>
         );

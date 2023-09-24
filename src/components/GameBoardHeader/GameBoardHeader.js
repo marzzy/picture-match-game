@@ -1,52 +1,66 @@
+import { useContext } from 'react';
+import { GAME_STATE, GameContext, GAME_PHOTO_THEMES, GAME_DIFFICULTY_LEVELS } from '../GameBoard/GameStateManagment';
 import { ResetButton } from '../ResetButton';
 import { CARDS_SIZE_RANGE_GAP, MIN_CARDS_SIZE, MAX_CARDS_SIZE  } from '@/components/Card/fixture';
 
-export function GameBoardHeader(props) {
-  const { selectedPhotosTheme, setSelectedPhotosTheme, fetchNewPhotos, cardsSize, setCardsSize, difficultyLevel, setDifficultyLevel } = props;
-
+export function GameBoardHeader() {
+  const {
+    settings: {
+      selectedPhotosTheme, setSelectedPhotosTheme,
+      difficultyLevel, setDifficultyLevel,
+      selectedcardSize, setSelectedCardSize,
+    },
+    gameDetails: { gameState },
+    photosDetails: { fetchNewPhotos }
+  } = useContext(GameContext);
+  const disableTheSettings = gameState === GAME_STATE.START;
+  
   return (
-    <div className='flex justify-evenly items-center'>
-        <ResetButton fetchNewPhotos={fetchNewPhotos} />
+    <>
+      <div className="flex justify-between items-center">
         <label>
           Photo Theme: {' '}
           <select
+            disabled={disableTheSettings}
             className="text-amber-400 bg-transparent"
             value={selectedPhotosTheme}
             onChange={e => setSelectedPhotosTheme(e.target.value)}
           >
-            <option value="cat">Cute Cat</option>
-            <option value="dog">Lovely Dog</option>
-            <option value="lofty giraffe">Lofty Giraffe</option>
+            {GAME_PHOTO_THEMES.map(photoTheme => (
+              <option value={photoTheme.value} key={photoTheme.value}>{photoTheme.label}</option>
+            ))}
           </select>
         </label>
         <label>
           Cards Size: {' '}
           <input
+            disabled={disableTheSettings}
             type="range"
             className="range accent-amber-400"
             id="cardsSize"
             name="CardsSize"
             min={MIN_CARDS_SIZE}
             max={MAX_CARDS_SIZE} 
-            value={cardsSize}
+            value={selectedcardSize}
             step={CARDS_SIZE_RANGE_GAP}
-            onChange={(e) => setCardsSize(e.target.value)}
+            onChange={(e) => setSelectedCardSize(e.target.value)}
           />
         </label>
         <label>
           Level: {' '}
-          <input
-            type="range"
-            className="range accent-amber-400"
-            id="level"
-            name="level"
-            min="1"
-            max='50'
+          <select
+            disabled={disableTheSettings}
+            className="text-amber-400 bg-transparent"
             value={difficultyLevel}
-            // step={CARDS_SIZE_RANGE_GAP}
-            onChange={(e) => setDifficultyLevel(e.target.value)}
-          />
+            onChange={(e) => setDifficultyLevel(Number(e.target.value))}
+          >
+            {GAME_DIFFICULTY_LEVELS.map(level => (
+              <option value={level.value} key={level.value}>{level.label}</option>
+            ))}
+          </select>
         </label>
       </div>
+      <ResetButton fetchNewPhotos={fetchNewPhotos} />
+    </>
   )
 }

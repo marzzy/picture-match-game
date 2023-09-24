@@ -1,5 +1,17 @@
-export function ScoreBoard(props) {
-  const { score, moveCounter, comboMoveCounter, record } = props;
+import { getAndUpdateRecord } from '@/utils'
+import { useContext, useEffect, useState } from 'react';
+import { GameContext } from '../GameBoard/GameStateManagment';
+
+export function ScoreBoard() {
+  const {
+    gameDetails: { scoreData: { score, moveCounter, comboMoveCounter }}
+  } = useContext(GameContext);
+  const [record, setRecord] = useState(0);
+
+  useEffect(() => {
+    // the loacl storage only available in the client side, so we need to get it in the useeffect
+    setRecord(getAndUpdateRecord(score));
+  }, [score])
 
   return (
     <>
