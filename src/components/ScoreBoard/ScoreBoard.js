@@ -1,11 +1,11 @@
 import { getAndUpdateRecord } from '@/utils'
-import { useContext, useEffect, useState } from 'react';
-import { GameContext } from '../GameBoard/GameStateManagment';
+import { useEffect, useState } from 'react';
+import { useGameStates } from '../GameStateManagment';
 
 export function ScoreBoard() {
   const {
     gameDetails: { scoreData: { score, moveCounter, comboMoveCounter }}
-  } = useContext(GameContext);
+  } = useGameStates();
   const [record, setRecord] = useState(0);
 
   useEffect(() => {

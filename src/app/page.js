@@ -1,6 +1,7 @@
 "use client";
 
-import { GameBoard } from '@/components/GameBoard' 
+import { GameBoard } from '@/components/GameBoard'
+import { GameProvider } from '@/components/GameStateManagment'
 
 export default function Home() {
   return (
@@ -12,7 +13,9 @@ export default function Home() {
         </h1>
       </header>
       <section className="col-span-12 md:col-start-2 md:col-span-10">
-        <GameBoard />
+        <GameProvider>
+          <GameBoard />
+        </GameProvider>
       </section>
     </main>
   )

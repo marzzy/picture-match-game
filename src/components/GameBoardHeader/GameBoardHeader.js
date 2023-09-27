@@ -1,18 +1,21 @@
-import { useContext } from 'react';
-import { GAME_STATE, GameContext, GAME_PHOTO_THEMES, GAME_DIFFICULTY_LEVELS } from '../GameBoard/GameStateManagment';
+import { GAME_STATE, useGameActions, GAME_PHOTO_THEMES, GAME_DIFFICULTY_LEVELS, useGameStates } from '../GameStateManagment';
 import { ResetButton } from '../ResetButton';
 import { CARDS_SIZE_RANGE_GAP, MIN_CARDS_SIZE, MAX_CARDS_SIZE  } from '@/components/Card/fixture';
 
 export function GameBoardHeader() {
   const {
+    setSelectedPhotosTheme,
+    setDifficultyLevel,
+    setSelectedCardSize,
+  } = useGameActions();
+  const {
     settings: {
-      selectedPhotosTheme, setSelectedPhotosTheme,
-      difficultyLevel, setDifficultyLevel,
-      selectedcardSize, setSelectedCardSize,
+      selectedPhotosTheme,
+      difficultyLevel,
+      selectedcardSize,
     },
     gameDetails: { gameState },
-    photosDetails: { fetchNewPhotos }
-  } = useContext(GameContext);
+  } = useGameStates();
   const disableTheSettings = gameState === GAME_STATE.START;
   
   return (
@@ -60,7 +63,7 @@ export function GameBoardHeader() {
           </select>
         </label>
       </div>
-      <ResetButton fetchNewPhotos={fetchNewPhotos} />
+      <ResetButton />
     </>
   )
 }

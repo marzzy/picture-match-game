@@ -1,8 +1,7 @@
-import { useContext } from "react";
-import { GameContext } from "../GameBoard/GameStateManagment";
+import { useGameStates } from "../GameStateManagment";
 
 export function ErrorDisplay() {
-  const { photosDetails: { errorMessage } } = useContext(GameContext);
+  const { photosDetails: { errorMessage } } = useGameStates();
 
   return (
     <div>

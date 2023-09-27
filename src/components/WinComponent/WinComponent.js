@@ -1,21 +1,14 @@
 import { ResetButton } from "../ResetButton"
-import { getRandomInt, getIfThereIsANewRecord } from "@/utils";
-import { recordBeatingPhrases, winPhrases } from "./fixtures";
-import { useContext } from "react";
-import { GameContext } from "../GameBoard/GameStateManagment";
+import { useGameStates } from "../GameStateManagment";
+import { getRandomWinPhrase } from './helper';
+import { getIfThereIsANewRecord } from "@/utils";
 
 export function WinComponent() {
   const {
     gameDetails: { scoreData: {score} },
-    photosDetails: { fetchNewPhotos }
-  } = useContext(GameContext);
-  let randomWinPhrase;
-  const newRecord = getIfThereIsANewRecord(score)
-  if(newRecord) {
-    randomWinPhrase = '🥇' + recordBeatingPhrases[getRandomInt(recordBeatingPhrases.length)] + '🥇';
-  } else {
-    randomWinPhrase = '🥳' + winPhrases[getRandomInt(winPhrases.length)] + '🎉';
-  }
+  } = useGameStates();
+  const newRecord = getIfThereIsANewRecord(score);
+  const randomWinPhrase = getRandomWinPhrase(!!newRecord);
 
   return (
     <div className='w-full h-full z-10 absolute flex top-0 left-0 bg-black/75 justify-center items-center flex-col rounded-md'>
@@ -25,7 +18,7 @@ export function WinComponent() {
       {newRecord && (
         <div className='bg-transparent text-amber-600'>💎 NEW RECORD: {newRecord} 💎</div>
       )}
-      <ResetButton fetchNewPhotos={fetchNewPhotos} />
+      <ResetButton />
     </div>
   )
 }

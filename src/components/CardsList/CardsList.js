@@ -1,10 +1,9 @@
 import { Card } from '@/components/Card';
-import { useContext } from 'react';
-import { GameContext } from '../GameBoard/GameStateManagment';
+import { useGameActions, useGameStates } from '../GameStateManagment';
 
-export function CardsList(props) {
-  const { startTheGame, handleFlipCard } = props;
-  const { gameDetails: { gameCards } } = useContext(GameContext);
+export function CardsList() {
+  const { startTheGame } = useGameActions();
+  const { gameDetails: { gameCards } } = useGameStates();
   let loadedimgsCounter = 0;
 
   function increaceLoadedimgsCounter() {
@@ -22,10 +21,8 @@ export function CardsList(props) {
           <li key={card.cardId}>
             <Card
               card={card}
-              onClick={() => handleFlipCard(card.cardId)}
               increaceLoadedimgsCounter={increaceLoadedimgsCounter}
-            >
-            </Card>
+            />
           </li>
         );
       })}

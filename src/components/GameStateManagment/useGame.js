@@ -2,8 +2,9 @@ import { useEffect, useReducer, useState } from 'react';
 import { useFetchImage } from '@/utils';
 import { INIT_CARDS_SIZE } from '@/components/Card/fixture';
 import {
-  GAME_ACTIONS, GAME_STATE, gameReducer, initGame, GAME_DEFAULT_DIFFICULTY_LEVEL, GAME_DEFAULT_PHOTO_THEME
-} from '@/components/GameBoard/GameStateManagment'
+  GAME_ACTIONS, initGame, GAME_DEFAULT_DIFFICULTY_LEVEL, GAME_DEFAULT_PHOTO_THEME
+} from '@/components/GameStateManagment';
+import { gameReducer } from './gameReducer';
 
 export function useGame() {
   const [selectedPhotosTheme, setSelectedPhotosTheme] = useState(GAME_DEFAULT_PHOTO_THEME.value);
@@ -13,10 +14,6 @@ export function useGame() {
     useFetchImage(selectedPhotosTheme, difficultyLevel+1, beforeFetchPhotos);
   const [{gameCards, gameState, playingCardsId, matchedCardsId, scoreData }, dispatchGame] =
     useReducer(gameReducer, initGame);
-
-  const isLoadingUIDisplay = [GAME_STATE.LOAD_CARDS, GAME_STATE.LOAD_IMAGES].includes(gameState) && !errorMessage;
-  const isCardsLoading = gameState === GAME_STATE.LOAD_CARDS;
-  const isTheGameFinished = gameState === GAME_STATE.FINISHED;
 
   useEffect(() => {
     // create new cards when the new photo were ready
@@ -62,21 +59,22 @@ export function useGame() {
   return {
     states: {
       settings: {
-        selectedPhotosTheme, setSelectedPhotosTheme,
-        difficultyLevel, setDifficultyLevel,
-        selectedcardSize, setSelectedCardSize,
+        selectedPhotosTheme,
+        difficultyLevel,
+        selectedcardSize,
       },
       gameDetails: {
         gameCards, gameState, playingCardsId, matchedCardsId, scoreData,
       },
-      photosDetails: { photos, isLoading, errorMessage, fetchNewPhotos }
+      photosDetails: { photos, isLoading, errorMessage }
     },
     actions: {
       handleFlipCard,
       startTheGame,
+      setSelectedPhotosTheme,
+      setDifficultyLevel,
+      setSelectedCardSize,
+      fetchNewPhotos
     },
-    isLoadingUIDisplay,
-    isCardsLoading,
-    isTheGameFinished,
   }
 }

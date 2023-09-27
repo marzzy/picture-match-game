@@ -4,36 +4,26 @@ import { CardsList } from '@/components/CardsList';
 import { GameBoardHeader } from '@/components/GameBoardHeader';
 import { ScoreBoard } from '@/components/ScoreBoard';
 import { WinComponent } from '../WinComponent';
-import { GameContext } from './GameStateManagment'
-import { useGame } from './GameStateManagment/useGame';
+import { GAME_STATE, useGameStates } from '../GameStateManagment'
 
 export function GameBoard() {
   const {
-    states,
-    actions: {
-      handleFlipCard,
-      startTheGame,
-    },
-    isLoadingUIDisplay,
-    isCardsLoading,
-    isTheGameFinished,
-  } = useGame();
+    gameDetails: { gameState },
+    photosDetails: { errorMessage }
+  } = useGameStates();
+  const isLoadingUIDisplay = [GAME_STATE.LOAD_CARDS, GAME_STATE.LOAD_IMAGES].includes(gameState) && !errorMessage;
+  const isCardsLoading = gameState === GAME_STATE.LOAD_CARDS;
+  const isTheGameFinished = gameState === GAME_STATE.FINISHED;
+  const hasError = !!(errorMessage);
 
   return (
-    <GameContext.Provider value={states}>
       <div className='relative py-5 h-screen'>
         <GameBoardHeader />
         <ScoreBoard />
         {isTheGameFinished && (<WinComponent />)}
         {isLoadingUIDisplay && <Loading />}
-        {states.photosDetails.errorMessage && <ErrorDisplay />}
-        {!isCardsLoading && (
-          <CardsList
-            handleFlipCard={handleFlipCard}
-            startTheGame={startTheGame}
-          />
-        )}
+        {hasError && <ErrorDisplay />}
+        {!isCardsLoading && (<CardsList /> )}
       </div>
-    </GameContext.Provider>
   );
 }

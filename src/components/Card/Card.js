@@ -1,14 +1,14 @@
 import Image from 'next/image';
-import { GAME_STATE, GameContext } from '../GameBoard/GameStateManagment';
-import { useContext } from 'react';
+import { GAME_STATE, useGameActions, useGameStates } from '../GameStateManagment';
 
 export function Card(props) {
-  const {onClick, card, increaceLoadedimgsCounter} = props;
+  const { card, increaceLoadedimgsCounter } = props;
+  const { handleFlipCard } = useGameActions();
   const {
     settings: { selectedcardSize },
     gameDetails: { gameState, playingCardsId, matchedCardsId },
     photosDetails: { photos }
-  } = useContext(GameContext);
+  } = useGameStates();
   const { url , width, height, alt } = photos.find(photo => photo.id === card.imgId);
 
   const isCardFlipped = 
@@ -18,7 +18,7 @@ export function Card(props) {
 
   function flipCard(){
     if(!isCardFlippingLock) 
-      onClick()
+    handleFlipCard(card.cardId);
   }
 
   return (
