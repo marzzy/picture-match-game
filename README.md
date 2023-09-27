@@ -1,34 +1,26 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Picture Match Game
 
-## Getting Started
+This is a small [picture match game](https://picture-match-game-five.vercel.app/)
 
-First, run the development server:
+## Building Blocks
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-```
+- This application using [React](https://react.dev/), [NextJs](https://nextjs.org/) and [Tailwind](https://v1.tailwindcss.com/) as building blocks.
+- It also fetch their images from [Unsplash](https://unsplash.com/) website.
+- This project's uses [Vercel](https://vercel.com/) for deployment and has a auto-deployment on merging to the main branch
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Structure
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+- The main and only page is available in the `app` directory with file name of `page.js`
+- The game compoents are availabe and seprated by different directories into the `components`
+- The game states data and changes are handled by a custom react hook, names `useGame` which can be find in the `components > GameStateManagment > useGame.js`
+- The `useGame` data and action handlers are provided by different game element by 2 seprate react context, one of them for access to the game data and the other one for running some actions and change the game data. Both of them provide by a single react provider which are available on `components > GameStateManagment > gameProvider.js`
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+## Configuration
 
-## Learn More
+Since this app using the Unsplash developer api, it needed the Unsplash developer access key to be available in `.env` environment with name of `NEXT_PUBLIC_API_ACCESS_KEY`. [Read more how to obtain an access key](https://unsplash.com/documentation#authorization)
 
-To learn more about Next.js, take a look at the following resources:
+After setting the `.env` file with the access key, by running `yarn install && yarn run dev` you can run the app in your system
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Release
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+The latest version of the app is also up and running and available in [picture-match-game-five.vercel.app](https://picture-match-game-five.vercel.app/)
