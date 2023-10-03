@@ -1,4 +1,4 @@
-import { GAME_STATE, useGameActions, GAME_PHOTO_THEMES, GAME_DIFFICULTY_LEVELS, useGameStates } from '../GameStateManagment';
+import { useGameActions, GAME_PHOTO_THEMES, GAME_DIFFICULTY_LEVELS, useGameStates } from '../GameStateManagment';
 import { ResetButton } from '../ResetButton';
 import { CARDS_SIZE_RANGE_GAP, MIN_CARDS_SIZE, MAX_CARDS_SIZE  } from '@/components/Card/fixture';
 
@@ -14,9 +14,7 @@ export function GameBoardHeader() {
       difficultyLevel,
       selectedcardSize,
     },
-    gameDetails: { gameState },
   } = useGameStates();
-  const disableTheSettings = gameState === GAME_STATE.START;
   
   return (
     <>
@@ -24,7 +22,6 @@ export function GameBoardHeader() {
         <label>
           Photo Theme: {' '}
           <select
-            disabled={disableTheSettings}
             className="text-amber-400 bg-transparent"
             value={selectedPhotosTheme}
             onChange={e => setSelectedPhotosTheme(e.target.value)}
@@ -37,7 +34,6 @@ export function GameBoardHeader() {
         <label>
           Cards Size: {' '}
           <input
-            disabled={disableTheSettings}
             type="range"
             className="range accent-amber-400"
             id="cardsSize"
@@ -52,7 +48,6 @@ export function GameBoardHeader() {
         <label>
           Level: {' '}
           <select
-            disabled={disableTheSettings}
             className="text-amber-400 bg-transparent"
             value={difficultyLevel}
             onChange={(e) => setDifficultyLevel(Number(e.target.value))}

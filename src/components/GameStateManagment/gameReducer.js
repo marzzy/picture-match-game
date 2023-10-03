@@ -1,6 +1,6 @@
 import { getRandomInt, getRandomUniqueNum } from '@/utils';
 import { GAME_ACTIONS, GAME_STATE, initGame } from './fixture';
-import {handleUncompleteMove, handleMatchMove, handleUnmatchMove, cleanTheUnmatchMove } from './actionMoveHandler';
+import { handleUncompleteMove, handleMatchMove, handleUnmatchMove, cleanTheUnmatchMove } from './actionMoveHandler';
 
 function setNewGameCards(photosDetails){
   const photosIdsList = photosDetails.map(photoDetails => photoDetails.id);

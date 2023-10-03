@@ -1,16 +1,18 @@
 import { Card } from '@/components/Card';
 import { useGameActions, useGameStates } from '../GameStateManagment';
+import { useRef } from 'react';
 
 export function CardsList() {
   const { startTheGame } = useGameActions();
   const { gameDetails: { gameCards } } = useGameStates();
-  let loadedimgsCounter = 0;
+  const loadedimgsCounterRef = useRef(0);
 
   function increaceLoadedimgsCounter() {
-    if (loadedimgsCounter+1 === gameCards.length) {
+    if (loadedimgsCounterRef.current+1 === gameCards.length) {
       startTheGame();
+      loadedimgsCounterRef.current = 0;
     } else {
-      loadedimgsCounter++;
+      loadedimgsCounterRef.current++;
     }
   }
 
